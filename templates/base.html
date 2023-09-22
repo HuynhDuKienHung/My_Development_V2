@@ -20,6 +20,9 @@
                 <button onclick="Goto_Login()" type="button" id="LoginButton" name="LoginButton" class="btn btn-light btn-lg">Login</button>
             </li>
             <li class="nav-item ">
+                <button onclick="Goto_Register()" type="button" id="RegisterButton" name="RegisterButton" class="btn btn-light btn-lg">Sign up</button>
+            </li>
+            <li class="nav-item ">
                 <button onclick="Goto_Logout()" type="button" id="LogoutButton" name="LogoutButton" class="btn btn-light btn-lg">Logout</button>
             </li>
             <li class="nav-item active ">
@@ -37,37 +40,32 @@
 <script>
     function Goto_Home_Page() {
         // You can use window.location to navigate to the index page or any other page you want to reset to.
-        window.location.href = "/home"; // Change "/" to the URL of your index page.
+        window.location.href = "/home"; 
     }
     function Goto_User_Guide_Page() {
         // You can use window.location to navigate to the index page or any other page you want to reset to.
-        window.location.href = "/UserGuide"; // Change "/" to the URL of your index page.
+        window.location.href = "/UserGuide"; 
     }
     function Goto_About() {
         // You can use window.location to navigate to the index page or any other page you want to reset to.
-        window.location.href = "/About"; // Change "/" to the URL of your index page.
+        window.location.href = "/About"; 
     }
     function Goto_Login() {
         // You can use window.location to navigate to the index page or any other page you want to reset to.
-        window.location.href = "/Login"; // Change "/" to the URL of your index page.
+        window.location.href = "/Login"; 
     }
     function Goto_Logout() {
         // You can use window.location to navigate to the index page or any other page you want to reset to.
-        window.location.href = "/Logout"; // Change "/" to the URL of your index page.
+        window.location.href = "/Logout";
     }
-
-var disableButton = (e) => {
-$('#LoginButton').prop('disabled', true);
-};
-$(document).on('click', '#LogoutButton', disableButton);
-
+    function Goto_Register() {
+        // You can use window.location to navigate to the index page or any other page you want to reset to.
+        window.location.href = "/Register";
+    }
 </script>
+
     {% block content %} 
     {% endblock %}
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
 </html>

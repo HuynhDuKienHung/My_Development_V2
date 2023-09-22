@@ -7,7 +7,7 @@ import pandas as pd
 import random
 
 import firebase_admin
-from firebase_admin import db
+from firebase_admin import db, credentials
 import json
 obj_create =firebase_admin.credentials.Certificate('static/js/serviceAccountKey.json')
 default_app = firebase_admin.initialize_app(obj_create,{
@@ -20,42 +20,21 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///user.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=30)
 
+ref_user = db.reference('/user')
 
 @app.route("/")
 def Load():
     return render_template("index.html");
 
-@app.route("/About")
-def About():
-    if "user" in session:
-        name = session['user']
-        return render_template("About.html");
-    else:
-        return redirect(url_for('loginPage'))
-
-@app.route("/UserGuide")
-def user_guide():
-    if "user" in session:
-        name = session['user']
-        return render_template("UserGuide.html");
-    else:
-        return redirect(url_for('loginPage'))
-
-@app.route("/home")
-def homePage():
-    if "user" in session:
-        name = session['user']
-        return render_template("home.html");
-    else:
-        return redirect(url_for('loginPage'))
-
 @app.route("/Login", methods =['POST','GET'])
-def loginPage():
-   if request.method == 'POST':
+def login():
+    if request.method == 'POST':
         user_name = request.form['ten']
         password = request.form['matkhau']
-        session.permanent = True
-        if user_name:
+        if not(check_account_exists(user_name)):
+            flash("Account doesn't exist", "info")
+            return redirect(url_for('signup'))
+        else:
             session['user'] =user_name
             ref = db.reference(f"/user/{user_name}")
             data_send = {
@@ -63,9 +42,54 @@ def loginPage():
                 'password': password
             }
             ref.update(data_send)
-            flash("Created in DB successfully", "info")
-        return redirect(url_for('user',name = user_name))
-   return render_template("login.html")
+            return redirect(url_for('user',name = user_name))
+    return render_template("login.html")
+
+@app.route("/Register", methods = ['POST', 'GET'])
+def signup():
+    if request.method == 'POST':
+        user_name = request.form['ten']
+        password = request.form['matkhau']
+        if not(check_account_exists(user_name)):
+            session['user'] =user_name
+            ref = db.reference(f"/user/{user_name}")
+            data_send = {
+                'name': user_name,
+                'password': password
+            }
+            ref.update(data_send)
+            return redirect(url_for('user',name = user_name))
+        else:
+            flash("Account already exists", "info")
+            return redirect(url_for('login'))
+    return render_template("signup.html")
+@app.route("/Logout")
+def Logout():
+    if "user" in session:
+        session.pop('user',None)
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+
+
+@app.route("/home")
+def homePage():
+    if "user" in session:
+        name = session['user']
+        return render_template("home.html");
+    else:
+        return redirect(url_for('login'))
+    
+@app.route("/UserGuide")
+def user_guide():
+    if "user" in session:
+        name = session['user']
+        return render_template("UserGuide.html");
+    else:
+        return redirect(url_for('login'))
+
+
 
 @app.route("/user")
 def user():
@@ -73,23 +97,23 @@ def user():
         name = session['user']
         return render_template("user.html");
     else:
-        return redirect(url_for('loginPage'))
+        return redirect(url_for('login'))
 
-@app.route("/Logout")
-def Logout():
+@app.route("/About")
+def About():
     if "user" in session:
-        session.pop('user',None)
-        return redirect(url_for('loginPage'))
+        name = session['user']
+        return render_template("About.html");
     else:
-        return redirect(url_for('loginPage'))
+        return redirect(url_for('login'))
+
+def check_account_exists(username):
+    user_ref = ref_user.child(username)
+    user_data = user_ref.get()
+    return user_data is not None
 
 if __name__ == "__main__":
     app.run(debug = True)
-
-
-
-
-
 '''
 @app.route("/", methods = ['GET','POST'])
 def submit():
