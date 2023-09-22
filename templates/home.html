@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %} 
+  {% block content %} 
+
+ <!--get user's information-->
+ <div class = "container" id ="get-information">
+    <div class = "well" id = "gradient"  style="border-color: rgba(0,0,0,0); ">
+        <h1>Khai báo thông tin người dùng</h1>
+
+        <form class="row g-3">
+                <div id ="Ten" class="col-md-4">
+                    <label for="Ho_Ten" class="form-label">Nhập họ và tên</label>
+                    <input type="email" class="form-control" id="Ho_Ten" placeholder="Nguyen Van A">
+                </div>
+
+                <div id="sdt" class="col-md-4">
+                    <label for="phone_number" class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control" id="phone_number" placeholder="Nhập số điện thoại">
+                </div>
+
+                <div id="cmnd" class="col-md-4">
+                    <label for="ID_Card" class="form-label">số chứng minh nhân dân/ Căn cước công dân</label>
+                    <input type="text" class="form-control" id="ID_Card" placeholder="Nhập CMND/CCCD">
+                </div>
+
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Giới tính</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">Nam</option>
+                    <option value="2">Nữ</option>
+                    <option value="3">...</option>
+                    </select>
+                </div>
+
+                <div id="tinh_trang_hon_nhan" class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Tình trạng hôn nh</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">Độc Thân</option>
+                    <option value="2">Đã kết hôn</option>
+                    <option value="3">...</option>
+                    </select>
+                </div>
+
+                <div id="benh-tim" class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Cao huyết áp</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">Có</option>
+                    <option value="2">Không</option>
+                    </select>
+                </div>
+
+                <div id="hut-thuoc" class="input-group mb-4 col-md-4">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Hút thuốc</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">Có</option>
+                    <option value="2">Đã từng hút</option>
+                    <option value="3">chưa bao giờ</option>
+                    </select>
+                </div>
+
+                <div id="chi_so_bmi" class="mb-4 col-md-4">
+                    <label for="bmi" class="form-label">Chỉ số BMI </label>
+                    <input type="text" class="form-control" id="bmi" placeholder="Nhập chỉ số BMI">
+                </div>
+        </form>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                I agree with the terms and conditions
+              </label>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button id = "SignUp" type="submit" class="btn btn-primary">Finish</button>
+          </div>
+        </form>
+    </div>
+  </div>
+
+  <!--trang lay thong tin do ve huyet ap va nhip tim-->
+  <div class = "container" id ="user-heartrate">
+    <div class = "well" id = "gradient"  style="border-color: rgba(0,0,0,0); ">
+      <h1>lấy thông tin huyết áp và nhịp tim từ phần cứng</h1>
+        <form>
+
+        </form>
+    </div>
+  </div>
+
+
+{% endblock %}
