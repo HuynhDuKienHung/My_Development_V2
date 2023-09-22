@@ -2,11 +2,24 @@ from flask import Flask , render_template, request, url_for, redirect, session, 
 from datetime import timedelta
 from flask import Flask
 from flask import current_app as app
-from flask_sqlalchemy import SQLAlchemy
 from os import path
 import pandas as pd
 import random
 
+import firebase_admin
+from firebase_admin import db
+import json
+obj_create =firebase_admin.credentials.Certificate('static/js/serviceAccountKey.json')
+default_app = firebase_admin.initialize_app(obj_create,{
+    'databaseURL':'https://database-02023-default-rtdb.firebaseio.com/'
+    })
+
+ref = db.reference("/user")
+data_send = {
+    'name': 'hehe',
+    'adress': 'hehe'
+}
+ref.update(data_send)
 #import model
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''.join((random.choice('abcdxyzpqr') for i in range(12)))
@@ -14,15 +27,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///user.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=30)
 
-db = SQLAlchemy(app)
-app.app_context().push()
-class User(db.Model):
-    user_id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100))
-    password = db.Column(db.String(100))
-    def  __init__(self, name, password):
-        self.name = name
-        self.password = password
 
 @app.route("/")
 def Load():
@@ -34,7 +38,6 @@ def About():
         name = session['user']
         return render_template("About.html");
     else:
-        flash("You haven't login yet", "info")
         return redirect(url_for('loginPage'))
 
 @app.route("/UserGuide")
@@ -43,7 +46,6 @@ def user_guide():
         name = session['user']
         return render_template("UserGuide.html");
     else:
-        flash("You haven't login yet", "info")
         return redirect(url_for('loginPage'))
 
 @app.route("/home")
@@ -52,7 +54,6 @@ def homePage():
         name = session['user']
         return render_template("home.html");
     else:
-        flash("You haven't login yet", "info")
         return redirect(url_for('loginPage'))
 
 @app.route("/Login", methods =['POST','GET'])
@@ -61,14 +62,15 @@ def loginPage():
         user_name = request.form['ten']
         password = request.form['matkhau']
         session.permanent = True
-        flash("You logged in successfully", "info")
         if user_name:
             session['user'] =user_name
-            user = User(user_name,password)
-            db.session.add(user)
-            db.session.commit()
+            ref = db.reference("/user/")
+            data_send = {
+                'name': user_name,
+                'adress': password
+            }
+            ref.update(data_send)
             flash("Created in DB successfully", "info")
-            A = True
         return redirect(url_for('user',name = user_name))
    return render_template("login.html")
 
@@ -78,23 +80,17 @@ def user():
         name = session['user']
         return render_template("user.html");
     else:
-        flash("You haven't login yet", "info")
         return redirect(url_for('loginPage'))
 
 @app.route("/Logout")
 def Logout():
     if "user" in session:
         session.pop('user',None)
-        flash("You logged out ", "info")
         return redirect(url_for('loginPage'))
     else:
-        flash("You haven't login yet", "info")
         return redirect(url_for('loginPage'))
 
 if __name__ == "__main__":
-    if not path.exists("user.db"):
-        db.create_all()
-        print("Created Database")
     app.run(debug = True)
 
 
