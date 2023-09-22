@@ -64,7 +64,7 @@ def loginPage():
         session.permanent = True
         if user_name:
             session['user'] =user_name
-            ref = db.reference("/user/{user_name}")
+            ref = db.reference(f"/user/{user_name}")
             data_send = {
                 'name': user_name,
                 'password': password
