@@ -64,10 +64,10 @@ def loginPage():
         session.permanent = True
         if user_name:
             session['user'] =user_name
-            ref = db.reference("/user/")
+            ref = db.reference("/user/{user_name}")
             data_send = {
                 'name': user_name,
-                'adress': password
+                'password': password
             }
             ref.update(data_send)
             flash("Created in DB successfully", "info")
