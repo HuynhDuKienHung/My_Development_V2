@@ -13,13 +13,6 @@ obj_create =firebase_admin.credentials.Certificate('static/js/serviceAccountKey.
 default_app = firebase_admin.initialize_app(obj_create,{
     'databaseURL':'https://database-02023-default-rtdb.firebaseio.com/'
     })
-
-ref = db.reference("/user")
-data_send = {
-    'name': 'hehe',
-    'adress': 'hehe'
-}
-ref.update(data_send)
 #import model
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''.join((random.choice('abcdxyzpqr') for i in range(12)))
