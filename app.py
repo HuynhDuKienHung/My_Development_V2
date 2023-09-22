@@ -50,7 +50,10 @@ def signup():
     if request.method == 'POST':
         user_name = request.form['ten']
         password = request.form['matkhau']
-        if not(check_account_exists(user_name)):
+        if (check_account_exists(user_name)):
+            flash("Account already exists", "info")
+            return redirect(url_for('login'))
+        else:
             session['user'] =user_name
             ref = db.reference(f"/user/{user_name}")
             data_send = {
@@ -59,9 +62,6 @@ def signup():
             }
             ref.update(data_send)
             return redirect(url_for('user',name = user_name))
-        else:
-            flash("Account already exists", "info")
-            return redirect(url_for('login'))
     return render_template("signup.html")
 @app.route("/Logout")
 def Logout():
