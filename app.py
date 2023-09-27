@@ -11,13 +11,11 @@ from firebase_admin import db, credentials
 import json
 obj_create =firebase_admin.credentials.Certificate('static/js/serviceAccountKey.json')
 default_app = firebase_admin.initialize_app(obj_create,{
-    'databaseURL':'https://database-02023-default-rtdb.firebaseio.com/'
+    'databaseURL':'https://real-time-database-02023-default-rtdb.firebaseio.com/'
     })
 #import model
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''.join((random.choice('abcdxyzpqr') for i in range(12)))
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///user.db'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=30)
 
 ref_user = db.reference('/user')
