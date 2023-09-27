@@ -75,7 +75,7 @@ def homePage():
 @app.route("/UserGuide")
 def user_guide():
     if "user" in session:
-        name = session['user']
+        user = session['user']
         return render_template("UserGuide.html");
     else:
         return redirect(url_for('login'))
@@ -86,7 +86,7 @@ def user_guide():
 def user():
     if "user" in session:
         name = session['user']
-        return render_template("user.html");
+        return render_template("user.html", user = name);
     else:
         return redirect(url_for('login'))
 
